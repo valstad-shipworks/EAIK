@@ -1,3 +1,26 @@
+Metadata-Version: 2.4
+Name: EAIK
+Version: 1.2.1
+Summary: Toolbox for Efficient Analytical Inverse Kinematics by Subproblem Decomposition.
+Author-email: Daniel Ostermeier <daniel.sebastian.ostermeier@tum.de>
+License-Expression: BSD-3-Clause
+Project-URL: Homepage, https://ostermd.github.io/EAIK/
+Project-URL: GitHub, https://github.com/OstermD/EAIK
+Project-URL: Paper, https://ieeexplore.ieee.org/document/11122599
+Keywords: Analytical Inverse Kinematics,Inverse Kinematics,Robot Kinematics
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.21.0
+Requires-Dist: urchin>=0.0.27
+Requires-Dist: setuptools
+Requires-Dist: pybind11>=2.10.0
+Requires-Dist: pybind11-stubgen>=0.13.0
+Dynamic: license-file
+
 # EAIK: A Toolbox for Efficient Analytical Inverse Kinematics by Subproblem Decomposition
 **Authors:** Daniel Ostermeier,
 Jonathan Külz and Matthias Althoff<br><br>

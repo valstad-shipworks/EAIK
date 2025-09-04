@@ -1,6 +1,6 @@
 import numpy as np
 
-from eaik.IK_DH import DhRobot
+from eaik import DhRobot
 
 """
 Example for a random robot kinematic

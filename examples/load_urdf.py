@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from eaik.IK_URDF import UrdfRobot
+from eaik import UrdfRobot
 import evaluate_ik as eval
 
 def urdf_example(path, batch_size):

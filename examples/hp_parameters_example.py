@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-from eaik.IK_HP import HPRobot
+from eaik import HPRobot
 import evaluate_ik as eval
 
 def HP_example(batch_size):
