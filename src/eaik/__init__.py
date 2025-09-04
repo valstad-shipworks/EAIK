@@ -3,6 +3,7 @@
 # Date: 09.11.23
 
 from abc import ABC
+import pathlib
 
 import numpy as np
 
@@ -94,7 +95,7 @@ class UrdfRobot(IKRobot):
     """A robot for which the kinematic chain is parsed from a URDF file."""
 
     def __init__(self,
-                 file_path: str,
+                 urdf: pathlib.Path | URDF,
                  fixed_axes: list[tuple[int, float]] | None = None):
         """
         EAIK Robot parametrized by URDF file
@@ -105,16 +106,18 @@ class UrdfRobot(IKRobot):
         if fixed_axes is None:
             fixed_axes = []
         super().__init__()
-        robot = URDF.load(file_path, lazy_load_meshes=True)
-        joints = robot._sort_joints(robot.actuated_joints)
+        if isinstance(urdf, pathlib.Path):
+            urdf = URDF.load(urdf.as_posix(), lazy_load_meshes=True)
+        self.urdf = urdf
+        joints = urdf._sort_joints(urdf.actuated_joints)
 
-        fk_zero_pose = robot.link_fk()  # Calculate FK
+        fk_zero_pose = urdf.link_fk()  # Calculate FK
 
         parent_p = np.zeros(3)
         H = np.array([], dtype=np.int64).reshape(0, 3)  # axes
         P = np.array([], dtype=np.int64).reshape(0, 3)  # offsets
         for i in range(len(joints)):
-            joint_child_link = robot.link_map[joints[i].child]
+            joint_child_link = urdf.link_map[joints[i].child]
             h, p = self.urdf_to_sp_conv(fk_zero_pose[joint_child_link], joints[i].axis, parent_p)
             H = np.vstack([H, h])
             P = np.vstack([P, p])
