@@ -2,12 +2,17 @@
 # Author: Daniel Ostermeier
 # Date: 09.11.23
 
+
+from operator import indexOf
+from typing import TYPE_CHECKING, cast
 from abc import ABC
 import pathlib
 
 import numpy as np
+if TYPE_CHECKING:
+    import numpy.typing as npt
 
-from urchin import URDF
+from urchin import URDF, Link
 
 import eaik.pybindings.EAIK as native
 
@@ -109,9 +114,11 @@ class UrdfRobot(IKRobot):
         if isinstance(urdf, pathlib.Path):
             urdf = URDF.load(urdf.as_posix(), lazy_load_meshes=True)
         self.urdf = urdf
+        all_joints = urdf._sort_joints(urdf.joints)
         joints = urdf._sort_joints(urdf.actuated_joints)
+        ee_joints = all_joints[indexOf(all_joints, joints[-1])+1:]
 
-        fk_zero_pose = urdf.link_fk()  # Calculate FK
+        fk_zero_pose = cast(dict[Link, npt.NDArray[np.float64]], urdf.link_fk())  # Calculate FK
 
         parent_p = np.zeros(3)
         H = np.array([], dtype=np.int64).reshape(0, 3)  # axes
@@ -123,8 +130,6 @@ class UrdfRobot(IKRobot):
             P = np.vstack([P, p])
             parent_p += p
 
-        # End effector displacement is (0,0,0)
-        P = np.vstack([P, np.zeros(3)])
         self._robot = native.Robot(H.T, P.T, np.eye(3), fixed_axes, True)
 
 
