@@ -63,3 +63,6 @@ var/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+eaik-rs/target
+eaik-rs/Cargo.lock
