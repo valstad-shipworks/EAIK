@@ -3,7 +3,7 @@ use std::path::PathBuf;
 
 fn main() {
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
-    let cpp_root = manifest_dir.join("../CPP");
+    let cpp_root = manifest_dir.join("./CPP");
 
     // Find Eigen include path
     let eigen_include = env::var("EIGEN3_INCLUDE_DIR").unwrap_or_else(|_| {
